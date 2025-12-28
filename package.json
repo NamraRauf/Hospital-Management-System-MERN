@@ -1,0 +1,36 @@
+{
+  "name": "hospital-management-system",
+  "version": "1.0.0",
+  "description": "Complete MERN Stack Hospital Management System with MongoDB, Express.js, React.js, and Node.js",
+  "main": "server/server.js",
+  "scripts": {
+    "install:client": "npm install --prefix client",
+    "install:server": "npm install --prefix server",
+    "postinstall": "npm run install:server && npm run install:client",
+    "build": "npm run install:client && npm run build --prefix client && node scripts/sync-client-build-to-root.js",
+    "start": "npm start --prefix server",
+    "server": "npm run server --prefix server",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "test": "echo \"No root tests\" && exit 0"
+  },
+  "keywords": [
+    "mern",
+    "mongodb",
+    "express",
+    "react",
+    "nodejs",
+    "hospital-management",
+    "full-stack",
+    "rest-api"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  }
+}
