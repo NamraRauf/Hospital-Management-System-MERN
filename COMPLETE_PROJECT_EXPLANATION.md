@@ -746,7 +746,7 @@ npm start
 - Mongoose ODM
 
 ### **Deployment:**
-- Netlify (Frontend)
+- Can be deployed on any hosting platform
 - Railway/Render (Backend - optional)
 
 ---
@@ -824,7 +824,7 @@ Hospital-Management-System/
 7. ✅ **Responsive Design**
 8. ✅ **Clean Code Architecture**
 9. ✅ **GitHub Repository**
-10. ✅ **Live Deployment Ready**
+10. ✅ **Production Ready**
 
 ---
 
@@ -836,8 +836,7 @@ Yeh project ek **complete, professional, aur functional** Hospital Management Sy
 - Secure, scalable, aur user-friendly hai
 - Real-world use ke liye ready hai
 
-**GitHub:** https://github.com/NamraRauf/Hospital-Management-System-MERN  
-**Live URL:** https://hospital-hms-frontend.netlify.app (after deployment)
+**GitHub:** https://github.com/NamraRauf/Hospital-Management-System-MERN
 
 ---
 
