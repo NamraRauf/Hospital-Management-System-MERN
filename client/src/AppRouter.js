@@ -8,6 +8,8 @@ import PatientProfile from './pages/PatientProfile';
 import Appointments from './pages/Appointments';
 import DoctorDashboard from './pages/DoctorDashboard';
 import DoctorAppointments from './pages/DoctorAppointments';
+import DoctorMedicalRecords from './pages/DoctorMedicalRecords';
+import DoctorAnalytics from './pages/DoctorAnalytics';
 import AdminDashboard from './pages/AdminDashboard';
 import Reports from './pages/Reports';
 import Dashboard from './pages/Dashboard';
@@ -91,6 +93,22 @@ const AppRouter = () => {
         element={
           <ProtectedRoute requiredUserType="doctor">
             <DoctorAppointments />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/doctor-medical-records" 
+        element={
+          <ProtectedRoute requiredUserType="doctor">
+            <DoctorMedicalRecords />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/doctor-analytics" 
+        element={
+          <ProtectedRoute requiredUserType="doctor">
+            <DoctorAnalytics />
           </ProtectedRoute>
         } 
       />

@@ -22,9 +22,8 @@ const Sidebar = ({ userType }) => {
       return [
         { path: '/doctor-dashboard', icon: '🏠', label: 'Dashboard' },
         { path: '/doctor-appointments', icon: '📅', label: 'Appointments' },
-        { path: '/reports', icon: '👥', label: 'Patients' },
-        { path: '/reports', icon: '📋', label: 'Medical Records' },
-        { path: '/reports', icon: '📊', label: 'Reports' }
+        { path: '/doctor-medical-records', icon: '📋', label: 'Medical Records' },
+        { path: '/doctor-analytics', icon: '📊', label: 'Analytics & Reports' }
       ];
     } else {
       return [

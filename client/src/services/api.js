@@ -39,8 +39,8 @@ API.interceptors.response.use(
 export const registerUser = (formData) => API.post("/patients/register", formData);
 export const registerPatient = (formData) => API.post("/patients/register", formData);
 export const registerDoctor = (formData) => API.post("/doctors/register", formData);
-export const loginUser = ({ email, password, ..._rest }) =>
-  API.post("/auth/login", { email, password });
+export const loginUser = ({ email, password, userType }) =>
+  API.post("/auth/login", { email, password, userType });
 
 // Patient APIs
 export const getMyProfile = () => API.get("/patients/profile");

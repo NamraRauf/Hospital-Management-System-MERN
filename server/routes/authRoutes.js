@@ -11,22 +11,53 @@ const router = express.Router();
 
 // ✅ Login Route with JWT Token
 router.post('/login', async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password, userType: requestedUserType } = req.body;
 
     try {
-        let user = await Admin.findOne({ email });
-        let userType = 'Admin';
+        // Validate email format
+        if (!email || !email.includes('@')) {
+            return res.status(400).json({ message: 'Please enter a valid email address' });
+        }
+
+        let user = null;
+        let userType = null;
         let userId = null;
         let userName = null;
 
-        if (!user) {
-            user = await Doctor.findOne({ email });
-            userType = 'Doctor';
-            if (!user) {
-                user = await Patient.findOne({ email });
+        // If userType is specified, check that specific collection first
+        if (requestedUserType) {
+            const normalizedType = requestedUserType.toLowerCase();
+            if (normalizedType === 'admin') {
+                user = await Admin.findOne({ email: email.toLowerCase().trim() });
+                userType = 'Admin';
+            } else if (normalizedType === 'doctor') {
+                user = await Doctor.findOne({ email: email.toLowerCase().trim() });
+                userType = 'Doctor';
+            } else if (normalizedType === 'patient') {
+                user = await Patient.findOne({ email: email.toLowerCase().trim() });
                 userType = 'Patient';
+            }
+        }
+
+        // If not found with specified type, or no type specified, check all collections
+        if (!user) {
+            user = await Admin.findOne({ email: email.toLowerCase().trim() });
+            userType = 'Admin';
+            
+            if (!user) {
+                user = await Doctor.findOne({ email: email.toLowerCase().trim() });
+                userType = 'Doctor';
+                
                 if (!user) {
-                    return res.status(404).json({ message: 'User Not Found' });
+                    user = await Patient.findOne({ email: email.toLowerCase().trim() });
+                    userType = 'Patient';
+                    
+                    if (!user) {
+                        return res.status(404).json({ 
+                            message: 'User not found. Please check your email or register first.',
+                            hint: 'Make sure you have registered with this email address.'
+                        });
+                    }
                 }
             }
         }

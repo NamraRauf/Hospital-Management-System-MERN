@@ -302,7 +302,7 @@ const DoctorDashboard = () => {
               Access and update patient medical records, prescriptions, and treatment notes
             </p>
             <button 
-              onClick={() => navigate('/reports')}
+              onClick={() => navigate('/doctor-medical-records')}
               style={{
                 backgroundColor: '#27ae60',
                 color: 'white',
@@ -357,7 +357,7 @@ const DoctorDashboard = () => {
               Generate reports and analyze hospital performance metrics
             </p>
             <button 
-              onClick={() => navigate('/reports')}
+              onClick={() => navigate('/doctor-analytics')}
               style={{
                 backgroundColor: '#9b59b6',
                 color: 'white',

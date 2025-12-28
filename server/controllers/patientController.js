@@ -170,15 +170,27 @@ exports.getMyProfile = async (req, res) => {
 // Update current patient's profile (from token)
 exports.updateMyProfile = async (req, res) => {
   try {
-    const patientId = req.user.userId;
+    const patientId = req.user.userId || req.user.id; // From auth middleware
     const updateData = { ...req.body };
     
     // Don't allow password update through this route
     delete updateData.password;
     
+    // If email is being updated, check if it's already taken by another user
+    if (updateData.email) {
+      const existingPatient = await Patient.findOne({ 
+        email: updateData.email, 
+        _id: { $ne: patientId } // Exclude current patient
+      });
+      if (existingPatient) {
+        return res.status(400).json({ message: "Email already exists" });
+      }
+    }
+    
+    // Update patient - allow email updates
     const patient = await Patient.findByIdAndUpdate(
       patientId,
-      updateData,
+      { $set: updateData },
       { new: true, runValidators: true }
     ).select("-password");
     
@@ -191,7 +203,14 @@ exports.updateMyProfile = async (req, res) => {
       patient 
     });
   } catch (error) {
-    res.status(500).json({ message: "Error updating profile", error: error.message });
+    console.error("Update Profile Error:", error);
+    if (error.code === 11000) {
+      return res.status(400).json({ message: "Email already exists" });
+    }
+    res.status(500).json({ 
+      message: "Error updating profile", 
+      error: error.message 
+    });
   }
 };
 

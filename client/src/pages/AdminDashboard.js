@@ -36,7 +36,23 @@ const AdminDashboard = () => {
         getAdminDashboardStats(),
         getAdminAllPatients(),
         getAdminAllDoctors(),
-        getAdminAllAdmins().catch(() => ({ data: [] })),
+        getAdminAllAdmins().catch((err) => {
+          console.error('❌ Error fetching admins:', err);
+          console.error('Error response:', err.response);
+          console.error('Error status:', err.response?.status);
+          console.error('Error data:', err.response?.data);
+          console.error('Error message:', err.message);
+          console.error('Full error object:', JSON.stringify(err, null, 2));
+          
+          // Show error in UI if it's an auth error
+          if (err.response?.status === 401 || err.response?.status === 403) {
+            console.warn('⚠️ Authentication error - token might be invalid or userType mismatch');
+            console.warn('Current userType:', localStorage.getItem('userType'));
+          }
+          
+          // Return empty array but log the error
+          return { data: [] };
+        }),
         getAllAppointments().catch(() => ({ data: [] })),
         getAdminProfile().catch(() => ({ data: null }))
       ]);
@@ -44,11 +60,34 @@ const AdminDashboard = () => {
       setStats(statsRes.data.stats);
       setPatients(patientsRes.data || []);
       setDoctors(doctorsRes.data || []);
-      setAdmins(adminsRes.data || []);
+      
+      // Debug admins response
+      console.log('📊 Admins API Response (Full):', adminsRes);
+      console.log('📊 Admins Response Type:', typeof adminsRes);
+      console.log('📊 Admins Response Data:', adminsRes.data);
+      console.log('📊 Admins Data Type:', typeof adminsRes.data);
+      console.log('📊 Admins Array Length:', adminsRes.data?.length || 0);
+      console.log('📊 Is Array?', Array.isArray(adminsRes.data));
+      
+      // Backend returns array directly: res.json(admins) = [admin1, admin2]
+      // Axios wraps it: response.data = [admin1, admin2]
+      let adminsArray = [];
+      if (Array.isArray(adminsRes.data)) {
+        adminsArray = adminsRes.data;
+      } else if (adminsRes.data && Array.isArray(adminsRes.data.data)) {
+        adminsArray = adminsRes.data.data;
+      } else if (adminsRes && Array.isArray(adminsRes)) {
+        adminsArray = adminsRes;
+      }
+      
+      console.log('📊 Final Admins Array:', adminsArray);
+      console.log('📊 Final Admins Count:', adminsArray.length);
+      setAdmins(adminsArray);
       setAppointments(appointmentsRes.data || []);
       setAdminInfo(adminRes.data);
     } catch (error) {
       console.error('Error fetching dashboard data:', error);
+      alert('Error loading dashboard data. Please refresh the page.');
     } finally {
       setLoading(false);
     }
@@ -904,6 +943,22 @@ const AdminDashboard = () => {
                 boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
                 padding: '10px 20px'
               }}>
+                <button
+                  onClick={fetchDashboardData}
+                  style={{
+                    padding: '8px 16px',
+                    backgroundColor: '#3498db',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '6px',
+                    cursor: 'pointer',
+                    fontSize: '14px',
+                    fontWeight: '600'
+                  }}
+                  title="Refresh admins list"
+                >
+                  🔄 Refresh
+                </button>
                 <div style={{ position: 'relative' }}>
                   <input
                     type="text"
@@ -927,6 +982,11 @@ const AdminDashboard = () => {
                 </div>
                 <div style={{ fontSize: '16px', color: '#64748b' }}>
                   Total: <strong style={{ color: '#8b5cf6' }}>{filteredAdmins.length}</strong> admins
+                  {admins.length !== filteredAdmins.length && (
+                    <span style={{ fontSize: '12px', color: '#94a3b8', marginLeft: '5px' }}>
+                      (of {admins.length} total)
+                    </span>
+                  )}
                 </div>
               </div>
             </div>

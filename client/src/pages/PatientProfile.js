@@ -255,7 +255,7 @@ const PatientProfile = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  disabled={true}
+                  disabled={!isEditing}
                   style={{
                     width: '100%',
                     padding: '10px',
@@ -263,10 +263,12 @@ const PatientProfile = () => {
                     borderRadius: '5px',
                     fontSize: '16px',
                     boxSizing: 'border-box',
-                    backgroundColor: '#f5f5f5'
+                    backgroundColor: isEditing ? 'white' : '#f5f5f5'
                   }}
                 />
-                <small style={{ color: '#666' }}>Email cannot be changed</small>
+                {isEditing && (
+                  <small style={{ color: '#3498db' }}>💡 You can update your email address</small>
+                )}
               </div>
             </div>
 

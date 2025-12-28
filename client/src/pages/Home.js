@@ -112,7 +112,13 @@ const Home = () => {
           ) : (
             <>
               <button
-                onClick={() => navigate('/login')}
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  console.log('Nav Login clicked');
+                  navigate('/login');
+                }}
                 style={{
                   padding: '10px 24px',
                   backgroundColor: 'transparent',
@@ -122,21 +128,30 @@ const Home = () => {
                   cursor: 'pointer',
                   fontSize: '16px',
                   fontWeight: '600',
-                  transition: 'all 0.3s'
+                  transition: 'all 0.3s',
+                  position: 'relative',
+                  zIndex: 1001,
+                  pointerEvents: 'auto'
                 }}
                 onMouseEnter={(e) => {
-                  e.target.style.backgroundColor = '#2563eb';
-                  e.target.style.color = 'white';
+                  e.currentTarget.style.backgroundColor = '#2563eb';
+                  e.currentTarget.style.color = 'white';
                 }}
                 onMouseLeave={(e) => {
-                  e.target.style.backgroundColor = 'transparent';
-                  e.target.style.color = '#2563eb';
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                  e.currentTarget.style.color = '#2563eb';
                 }}
               >
                 Login
               </button>
               <button
-                onClick={() => navigate('/register')}
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  console.log('Nav Get Started clicked');
+                  navigate('/register');
+                }}
                 style={{
                   padding: '10px 24px',
                   backgroundColor: '#2563eb',
@@ -147,15 +162,18 @@ const Home = () => {
                   fontSize: '16px',
                   fontWeight: '600',
                   boxShadow: '0 4px 6px rgba(37, 99, 235, 0.3)',
-                  transition: 'all 0.3s'
+                  transition: 'all 0.3s',
+                  position: 'relative',
+                  zIndex: 1001,
+                  pointerEvents: 'auto'
                 }}
                 onMouseEnter={(e) => {
-                  e.target.style.transform = 'translateY(-2px)';
-                  e.target.style.boxShadow = '0 6px 12px rgba(37, 99, 235, 0.4)';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 6px 12px rgba(37, 99, 235, 0.4)';
                 }}
                 onMouseLeave={(e) => {
-                  e.target.style.transform = 'translateY(0)';
-                  e.target.style.boxShadow = '0 4px 6px rgba(37, 99, 235, 0.3)';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 4px 6px rgba(37, 99, 235, 0.3)';
                 }}
               >
                 Get Started
@@ -230,7 +248,13 @@ const Home = () => {
               </p>
               <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
                 <button
-                  onClick={handleGetStarted}
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('Button clicked:', token ? 'Dashboard' : 'Register');
+                    handleGetStarted();
+                  }}
                   style={{
                     padding: '16px 40px',
                     backgroundColor: '#fbbf24',
@@ -241,22 +265,31 @@ const Home = () => {
                     fontSize: '18px',
                     fontWeight: '700',
                     boxShadow: '0 8px 16px rgba(0,0,0,0.2)',
-                    transition: 'all 0.3s'
+                    transition: 'all 0.3s',
+                    position: 'relative',
+                    zIndex: 10,
+                    pointerEvents: 'auto'
                   }}
                   onMouseEnter={(e) => {
-                    e.target.style.transform = 'translateY(-3px)';
-                    e.target.style.boxShadow = '0 12px 24px rgba(0,0,0,0.3)';
+                    e.currentTarget.style.transform = 'translateY(-3px)';
+                    e.currentTarget.style.boxShadow = '0 12px 24px rgba(0,0,0,0.3)';
                   }}
                   onMouseLeave={(e) => {
-                    e.target.style.transform = 'translateY(0)';
-                    e.target.style.boxShadow = '0 8px 16px rgba(0,0,0,0.2)';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = '0 8px 16px rgba(0,0,0,0.2)';
                   }}
                 >
                   {token ? 'Go to Dashboard' : 'Start Free Trial'}
                 </button>
                 {!token && (
                   <button
-                    onClick={() => navigate('/login')}
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      console.log('Login button clicked');
+                      navigate('/login');
+                    }}
                     style={{
                       padding: '16px 40px',
                       backgroundColor: 'transparent',
@@ -266,21 +299,82 @@ const Home = () => {
                       cursor: 'pointer',
                       fontSize: '18px',
                       fontWeight: '700',
-                      transition: 'all 0.3s'
+                      transition: 'all 0.3s',
+                      position: 'relative',
+                      zIndex: 10,
+                      pointerEvents: 'auto'
                     }}
                     onMouseEnter={(e) => {
-                      e.target.style.backgroundColor = 'white';
-                      e.target.style.color = '#667eea';
+                      e.currentTarget.style.backgroundColor = 'white';
+                      e.currentTarget.style.color = '#667eea';
                     }}
                     onMouseLeave={(e) => {
-                      e.target.style.backgroundColor = 'transparent';
-                      e.target.style.color = 'white';
+                      e.currentTarget.style.backgroundColor = 'transparent';
+                      e.currentTarget.style.color = 'white';
                     }}
                   >
                     Sign In
                   </button>
                 )}
               </div>
+        </div>
+      </section>
+
+      {/* Statistics Section */}
+      <section style={{ 
+        padding: '80px 40px', 
+        backgroundColor: '#f8fafc',
+        background: 'linear-gradient(135deg, #f8fafc 0%, #ffffff 100%)'
+      }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <h2 style={{
+            textAlign: 'center',
+            fontSize: '42px',
+            fontWeight: '700',
+            color: '#1e293b',
+            marginBottom: '20px'
+          }}>
+            Trusted by Healthcare Professionals
+          </h2>
+          <p style={{
+            textAlign: 'center',
+            fontSize: '18px',
+            color: '#64748b',
+            marginBottom: '60px'
+          }}>
+            Comprehensive solution for modern healthcare management
+          </p>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gap: '30px',
+            marginBottom: '40px'
+          }}>
+            <StatBox 
+              number="10,000+" 
+              label="Patients Managed" 
+              icon="👥"
+              desc="Efficient patient record management"
+            />
+            <StatBox 
+              number="500+" 
+              label="Doctors Registered" 
+              icon="👨‍⚕️"
+              desc="Expert medical professionals"
+            />
+            <StatBox 
+              number="50,000+" 
+              label="Appointments Booked" 
+              icon="📅"
+              desc="Seamless appointment scheduling"
+            />
+            <StatBox 
+              number="99.9%" 
+              label="Uptime" 
+              icon="⚡"
+              desc="Reliable system performance"
+            />
+          </div>
         </div>
       </section>
 
@@ -303,14 +397,22 @@ const Home = () => {
           }}>
             {/* Feature 1 */}
             <div 
-              onClick={() => navigate('/register')}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Patient Management clicked');
+                navigate('/register');
+              }}
               style={{
                 padding: '40px',
                 borderRadius: '16px',
                 backgroundColor: '#f8fafc',
                 border: '1px solid #e2e8f0',
                 transition: 'all 0.3s',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                position: 'relative',
+                zIndex: 10,
+                pointerEvents: 'auto'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-5px)';
@@ -347,7 +449,10 @@ const Home = () => {
 
             {/* Feature 2 - Doctor Portal */}
             <div 
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Doctor Portal clicked');
                 const token = localStorage.getItem('token');
                 const userType = localStorage.getItem('userType');
                 
@@ -376,7 +481,10 @@ const Home = () => {
                 backgroundColor: '#f8fafc',
                 border: '1px solid #e2e8f0',
                 transition: 'all 0.3s',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                position: 'relative',
+                zIndex: 10,
+                pointerEvents: 'auto'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-5px)';
@@ -515,7 +623,10 @@ const Home = () => {
 
             {/* Feature 5 - Admin Panel */}
             <div
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Admin Panel clicked');
                 const token = localStorage.getItem('token');
                 const userType = localStorage.getItem('userType');
                 
@@ -538,7 +649,9 @@ const Home = () => {
                 border: '2px solid #8b5cf6',
                 transition: 'all 0.3s',
                 cursor: 'pointer',
-                position: 'relative'
+                position: 'relative',
+                zIndex: 10,
+                pointerEvents: 'auto'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-5px)';
@@ -588,7 +701,10 @@ const Home = () => {
 
             {/* Feature 6 - Analytics & Reports */}
             <div
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Analytics clicked');
                 const token = localStorage.getItem('token');
                 if (token) {
                   navigate('/reports');
@@ -602,7 +718,10 @@ const Home = () => {
                 backgroundColor: '#f8fafc',
                 border: '1px solid #e2e8f0',
                 transition: 'all 0.3s',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                position: 'relative',
+                zIndex: 10,
+                pointerEvents: 'auto'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-5px)';
@@ -638,8 +757,13 @@ const Home = () => {
             </div>
 
             {/* Feature 6 - MERN Stack */}
-            <div 
-              onClick={() => navigate('/mern-stack')}
+            <div
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('MERN Stack card clicked');
+                navigate('/mern-stack');
+              }}
               style={{
                 padding: '40px',
                 borderRadius: '16px',
@@ -648,7 +772,9 @@ const Home = () => {
                 transition: 'all 0.3s',
                 cursor: 'pointer',
                 position: 'relative',
-                overflow: 'hidden'
+                overflow: 'hidden',
+                zIndex: 10,
+                pointerEvents: 'auto'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-5px)';
@@ -871,6 +997,128 @@ const Home = () => {
             </div>
           </section>
 
+          {/* Testimonials Section */}
+          <section style={{ 
+            padding: '100px 40px', 
+            backgroundColor: '#ffffff',
+            background: 'linear-gradient(to bottom, #ffffff 0%, #f8fafc 100%)'
+          }}>
+            <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+              <h2 style={{
+                textAlign: 'center',
+                fontSize: '42px',
+                fontWeight: '700',
+                color: '#1e293b',
+                marginBottom: '20px'
+              }}>
+                What Healthcare Professionals Say
+              </h2>
+              <p style={{
+                textAlign: 'center',
+                fontSize: '18px',
+                color: '#64748b',
+                marginBottom: '60px'
+              }}>
+                Trusted by hospitals and clinics worldwide
+              </p>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                gap: '30px'
+              }}>
+                <TestimonialCard
+                  name="Dr. Sarah Johnson"
+                  role="Chief Medical Officer"
+                  hospital="City General Hospital"
+                  text="This system has revolutionized our patient management. The MERN stack implementation is flawless and the UI is incredibly intuitive."
+                  rating={5}
+                />
+                <TestimonialCard
+                  name="Dr. Michael Chen"
+                  role="Hospital Administrator"
+                  hospital="Metro Healthcare"
+                  text="Best hospital management system we've used. The admin panel is comprehensive and the real-time analytics are invaluable."
+                  rating={5}
+                />
+                <TestimonialCard
+                  name="Dr. Emily Rodriguez"
+                  role="Head of Pediatrics"
+                  hospital="Children's Medical Center"
+                  text="The appointment system is seamless and the patient portal makes everything so easy for our patients. Highly recommended!"
+                  rating={5}
+                />
+              </div>
+            </div>
+          </section>
+
+          {/* Technology Showcase */}
+          <section style={{ 
+            padding: '100px 40px', 
+            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            color: 'white'
+          }}>
+            <div style={{ maxWidth: '1200px', margin: '0 auto', textAlign: 'center' }}>
+              <h2 style={{
+                fontSize: '42px',
+                fontWeight: '700',
+                marginBottom: '20px',
+                textShadow: '0 2px 10px rgba(0,0,0,0.2)'
+              }}>
+                Built with Modern Technology
+              </h2>
+              <p style={{
+                fontSize: '20px',
+                marginBottom: '60px',
+                opacity: 0.95,
+                textShadow: '0 2px 10px rgba(0,0,0,0.2)'
+              }}>
+                Complete MERN Stack implementation for scalable, secure, and efficient healthcare management
+              </p>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+                gap: '30px'
+              }}>
+                <TechCard name="MongoDB" desc="NoSQL Database" icon="🍃" color="#10b981" />
+                <TechCard name="Express.js" desc="Backend Framework" icon="⚡" color="#000000" />
+                <TechCard name="React.js" desc="Frontend Library" icon="⚛️" color="#61dafb" />
+                <TechCard name="Node.js" desc="Runtime Environment" icon="🟢" color="#339933" />
+              </div>
+              <div style={{ marginTop: '50px' }}>
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('MERN Stack button clicked');
+                    navigate('/mern-stack');
+                  }}
+                  style={{
+                    padding: '16px 40px',
+                    backgroundColor: 'white',
+                    color: '#667eea',
+                    border: 'none',
+                    borderRadius: '12px',
+                    cursor: 'pointer',
+                    fontSize: '18px',
+                    fontWeight: '700',
+                    boxShadow: '0 8px 16px rgba(0,0,0,0.2)',
+                    transition: 'all 0.3s'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.transform = 'translateY(-3px)';
+                    e.target.style.boxShadow = '0 12px 24px rgba(0,0,0,0.3)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.transform = 'translateY(0)';
+                    e.target.style.boxShadow = '0 8px 16px rgba(0,0,0,0.2)';
+                  }}
+                >
+                  View Complete MERN Stack Details →
+                </button>
+              </div>
+            </div>
+          </section>
+
           {/* CTA Section */}
           <section style={{ 
             padding: '100px 40px', 
@@ -994,6 +1242,76 @@ const Home = () => {
     </div>
   );
 };
+
+const TestimonialCard = ({ name, role, hospital, text, rating }) => (
+  <div style={{
+    backgroundColor: 'white',
+    padding: '30px',
+    borderRadius: '16px',
+    boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+    border: '1px solid #e2e8f0',
+    transition: 'all 0.3s'
+  }}
+  onMouseEnter={(e) => {
+    e.currentTarget.style.transform = 'translateY(-5px)';
+    e.currentTarget.style.boxShadow = '0 12px 24px rgba(0,0,0,0.15)';
+  }}
+  onMouseLeave={(e) => {
+    e.currentTarget.style.transform = 'translateY(0)';
+    e.currentTarget.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+  }}
+  >
+    <div style={{ marginBottom: '20px' }}>
+      {Array.from({ length: rating }).map((_, i) => (
+        <span key={i} style={{ fontSize: '20px', color: '#fbbf24' }}>⭐</span>
+      ))}
+    </div>
+    <p style={{ 
+      fontSize: '16px', 
+      color: '#64748b', 
+      lineHeight: '1.8', 
+      marginBottom: '20px',
+      fontStyle: 'italic'
+    }}>
+      "{text}"
+    </p>
+    <div style={{ borderTop: '1px solid #e2e8f0', paddingTop: '20px' }}>
+      <div style={{ fontWeight: '700', color: '#1e293b', fontSize: '18px' }}>
+        {name}
+      </div>
+      <div style={{ color: '#64748b', fontSize: '14px', marginTop: '5px' }}>
+        {role} • {hospital}
+      </div>
+    </div>
+  </div>
+);
+
+const TechCard = ({ name, desc, icon, color }) => (
+  <div style={{
+    backgroundColor: 'rgba(255,255,255,0.1)',
+    padding: '30px',
+    borderRadius: '16px',
+    backdropFilter: 'blur(10px)',
+    border: '2px solid rgba(255,255,255,0.2)',
+    textAlign: 'center',
+    transition: 'all 0.3s'
+  }}
+  onMouseEnter={(e) => {
+    e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.2)';
+    e.currentTarget.style.transform = 'translateY(-5px)';
+  }}
+  onMouseLeave={(e) => {
+    e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.1)';
+    e.currentTarget.style.transform = 'translateY(0)';
+  }}
+  >
+    <div style={{ fontSize: '50px', marginBottom: '15px' }}>{icon}</div>
+    <h3 style={{ fontSize: '24px', fontWeight: '700', marginBottom: '10px', color: 'white' }}>
+      {name}
+    </h3>
+    <p style={{ fontSize: '16px', color: 'rgba(255,255,255,0.9)' }}>{desc}</p>
+  </div>
+);
 
 const StatBox = ({ number, label, icon, desc }) => (
   <div style={{
