@@ -337,7 +337,91 @@ const DoctorAnalytics = () => {
           </div>
         </div>
 
-        {/* Performance Metrics */}
+        {/* Performance Metrics - Enhanced */}
+        <div style={{
+          backgroundColor: 'white',
+          padding: '30px',
+          borderRadius: '12px',
+          boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+          marginBottom: '30px'
+        }}>
+          <h3 style={{ color: '#2c3e50', marginBottom: '25px', fontSize: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <span>📊</span>
+            <span>Performance Metrics & KPIs</span>
+          </h3>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px' }}>
+            <div style={{ 
+              textAlign: 'center', 
+              padding: '25px', 
+              background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+              borderRadius: '12px',
+              color: 'white',
+              boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)'
+            }}>
+              <div style={{ fontSize: '36px', marginBottom: '10px' }}>✅</div>
+              <div style={{ fontSize: '32px', fontWeight: '700', marginBottom: '5px' }}>
+                {stats.completionRate}%
+              </div>
+              <div style={{ fontSize: '14px', opacity: 0.9 }}>Completion Rate</div>
+              <div style={{ fontSize: '12px', opacity: 0.8, marginTop: '5px' }}>
+                {stats.completed} of {stats.totalAppointments} completed
+              </div>
+            </div>
+            <div style={{ 
+              textAlign: 'center', 
+              padding: '25px', 
+              background: 'linear-gradient(135deg, #3498db 0%, #2563eb 100%)',
+              borderRadius: '12px',
+              color: 'white',
+              boxShadow: '0 4px 12px rgba(52, 152, 219, 0.3)'
+            }}>
+              <div style={{ fontSize: '36px', marginBottom: '10px' }}>📈</div>
+              <div style={{ fontSize: '32px', fontWeight: '700', marginBottom: '5px' }}>
+                {stats.avgAppointmentsPerPatient}x
+              </div>
+              <div style={{ fontSize: '14px', opacity: 0.9 }}>Avg Visits/Patient</div>
+              <div style={{ fontSize: '12px', opacity: 0.8, marginTop: '5px' }}>
+                Patient retention metric
+              </div>
+            </div>
+            <div style={{ 
+              textAlign: 'center', 
+              padding: '25px', 
+              background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+              borderRadius: '12px',
+              color: 'white',
+              boxShadow: '0 4px 12px rgba(245, 158, 11, 0.3)'
+            }}>
+              <div style={{ fontSize: '36px', marginBottom: '10px' }}>📅</div>
+              <div style={{ fontSize: '32px', fontWeight: '700', marginBottom: '5px' }}>
+                {stats.thisWeek}
+              </div>
+              <div style={{ fontSize: '14px', opacity: 0.9 }}>This Week</div>
+              <div style={{ fontSize: '12px', opacity: 0.8, marginTop: '5px' }}>
+                Last 7 days activity
+              </div>
+            </div>
+            <div style={{ 
+              textAlign: 'center', 
+              padding: '25px', 
+              background: 'linear-gradient(135deg, #9b59b6 0%, #7c3aed 100%)',
+              borderRadius: '12px',
+              color: 'white',
+              boxShadow: '0 4px 12px rgba(155, 89, 182, 0.3)'
+            }}>
+              <div style={{ fontSize: '36px', marginBottom: '10px' }}>📊</div>
+              <div style={{ fontSize: '32px', fontWeight: '700', marginBottom: '5px' }}>
+                {stats.thisMonth}
+              </div>
+              <div style={{ fontSize: '14px', opacity: 0.9 }}>This Month</div>
+              <div style={{ fontSize: '12px', opacity: 0.8, marginTop: '5px' }}>
+                Last 30 days activity
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Success Rate & Efficiency */}
         <div style={{
           backgroundColor: 'white',
           padding: '30px',
@@ -346,32 +430,98 @@ const DoctorAnalytics = () => {
           marginBottom: '30px'
         }}>
           <h3 style={{ color: '#2c3e50', marginBottom: '25px', fontSize: '20px' }}>
-            Performance Metrics
+            Success Rate & Efficiency Analysis
           </h3>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px' }}>
-            <div style={{ textAlign: 'center', padding: '20px', backgroundColor: '#f8f9fa', borderRadius: '8px' }}>
-              <div style={{ fontSize: '32px', fontWeight: '700', color: '#10b981', marginBottom: '5px' }}>
-                {stats.completionRate}%
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px' }}>
+            <div style={{ 
+              padding: '20px', 
+              backgroundColor: '#f0fdf4', 
+              borderRadius: '10px',
+              border: '2px solid #22c55e'
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
+                <span style={{ fontSize: '16px', fontWeight: '600', color: '#166534' }}>Success Rate</span>
+                <span style={{ fontSize: '24px', fontWeight: '700', color: '#22c55e' }}>
+                  {stats.totalAppointments > 0 ? ((stats.completed / (stats.totalAppointments - stats.cancelled)) * 100).toFixed(0) : 0}%
+                </span>
               </div>
-              <div style={{ fontSize: '14px', color: '#666' }}>Completion Rate</div>
+              <div style={{
+                width: '100%',
+                height: '12px',
+                backgroundColor: '#dcfce7',
+                borderRadius: '6px',
+                overflow: 'hidden'
+              }}>
+                <div style={{
+                  width: `${stats.totalAppointments > 0 ? ((stats.completed / (stats.totalAppointments - stats.cancelled)) * 100) : 0}%`,
+                  height: '100%',
+                  backgroundColor: '#22c55e',
+                  transition: 'width 0.3s'
+                }}></div>
+              </div>
+              <div style={{ fontSize: '12px', color: '#166534', marginTop: '8px' }}>
+                Completed appointments vs total (excluding cancelled)
+              </div>
             </div>
-            <div style={{ textAlign: 'center', padding: '20px', backgroundColor: '#f8f9fa', borderRadius: '8px' }}>
-              <div style={{ fontSize: '32px', fontWeight: '700', color: '#3498db', marginBottom: '5px' }}>
-                {stats.avgAppointmentsPerPatient}
+            <div style={{ 
+              padding: '20px', 
+              backgroundColor: '#fef3c7', 
+              borderRadius: '10px',
+              border: '2px solid #f59e0b'
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
+                <span style={{ fontSize: '16px', fontWeight: '600', color: '#92400e' }}>Pending Ratio</span>
+                <span style={{ fontSize: '24px', fontWeight: '700', color: '#f59e0b' }}>
+                  {stats.totalAppointments > 0 ? ((stats.pending / stats.totalAppointments) * 100).toFixed(0) : 0}%
+                </span>
               </div>
-              <div style={{ fontSize: '14px', color: '#666' }}>Avg Appointments/Patient</div>
+              <div style={{
+                width: '100%',
+                height: '12px',
+                backgroundColor: '#fef3c7',
+                borderRadius: '6px',
+                overflow: 'hidden'
+              }}>
+                <div style={{
+                  width: `${stats.totalAppointments > 0 ? ((stats.pending / stats.totalAppointments) * 100) : 0}%`,
+                  height: '100%',
+                  backgroundColor: '#f59e0b',
+                  transition: 'width 0.3s'
+                }}></div>
+              </div>
+              <div style={{ fontSize: '12px', color: '#92400e', marginTop: '8px' }}>
+                Appointments awaiting confirmation
+              </div>
             </div>
-            <div style={{ textAlign: 'center', padding: '20px', backgroundColor: '#f8f9fa', borderRadius: '8px' }}>
-              <div style={{ fontSize: '32px', fontWeight: '700', color: '#f59e0b', marginBottom: '5px' }}>
-                {stats.thisWeek}
+            <div style={{ 
+              padding: '20px', 
+              backgroundColor: '#eff6ff', 
+              borderRadius: '10px',
+              border: '2px solid #3b82f6'
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
+                <span style={{ fontSize: '16px', fontWeight: '600', color: '#1e40af' }}>Patient Engagement</span>
+                <span style={{ fontSize: '24px', fontWeight: '700', color: '#3b82f6' }}>
+                  {stats.uniquePatients > 0 ? ((stats.totalAppointments / stats.uniquePatients) * 100 / 10).toFixed(1) : 0}%
+                </span>
               </div>
-              <div style={{ fontSize: '14px', color: '#666' }}>This Week</div>
-            </div>
-            <div style={{ textAlign: 'center', padding: '20px', backgroundColor: '#f8f9fa', borderRadius: '8px' }}>
-              <div style={{ fontSize: '32px', fontWeight: '700', color: '#9b59b6', marginBottom: '5px' }}>
-                {stats.thisMonth}
+              <div style={{
+                width: '100%',
+                height: '12px',
+                backgroundColor: '#dbeafe',
+                borderRadius: '6px',
+                overflow: 'hidden'
+              }}>
+                <div style={{
+                  width: `${stats.uniquePatients > 0 ? Math.min(((stats.totalAppointments / stats.uniquePatients) * 10), 100) : 0}%`,
+                  height: '100%',
+                  backgroundColor: '#3b82f6',
+                  transition: 'width 0.3s'
+                }}></div>
               </div>
-              <div style={{ fontSize: '14px', color: '#666' }}>This Month</div>
+              <div style={{ fontSize: '12px', color: '#1e40af', marginTop: '8px' }}>
+                Average appointments per patient engagement score
+              </div>
             </div>
           </div>
         </div>
