@@ -612,6 +612,17 @@ const Home = () => {
               <p style={{ fontSize: '16px', color: 'rgba(255, 255, 255, 0.9)', lineHeight: '1.6', marginBottom: '20px' }}>
                 Enterprise-grade security with multiple layers of protection
               </p>
+              <div style={{ 
+                marginTop: '15px', 
+                padding: '12px', 
+                backgroundColor: 'rgba(255, 255, 255, 0.1)', 
+                borderRadius: '8px',
+                fontSize: '12px',
+                color: 'rgba(255, 255, 255, 0.8)',
+                fontStyle: 'italic'
+              }}>
+                ℹ️ Information display only - Click to learn more about our security features
+              </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'white', fontSize: '14px' }}>
                   <span style={{ fontSize: '18px' }}>✅</span>
