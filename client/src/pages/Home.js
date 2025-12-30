@@ -572,13 +572,6 @@ const Home = () => {
 
             {/* Feature 4 - Enhanced Security Section */}
             <div 
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                console.log('Security clicked');
-                navigate('/security-details');
-              }}
-              type="button"
               style={{
                 padding: '40px',
                 borderRadius: '16px',
@@ -586,16 +579,16 @@ const Home = () => {
                 background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                 border: '2px solid #764ba2',
                 transition: 'all 0.3s',
-                cursor: 'pointer',
                 position: 'relative',
-                overflow: 'hidden'
+                overflow: 'hidden',
+                cursor: 'default'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-8px) scale(1.02)';
-                e.currentTarget.style.boxShadow = '0 20px 40px rgba(118, 75, 162, 0.3)';
+                e.currentTarget.style.transform = 'translateY(-5px)';
+                e.currentTarget.style.boxShadow = '0 12px 24px rgba(118, 75, 162, 0.2)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                e.currentTarget.style.transform = 'translateY(0)';
                 e.currentTarget.style.boxShadow = 'none';
               }}
             >

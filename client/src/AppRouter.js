@@ -14,7 +14,6 @@ import AdminDashboard from './pages/AdminDashboard';
 import Reports from './pages/Reports';
 import Dashboard from './pages/Dashboard';
 import MERNStackDetails from './pages/MERNStackDetails';
-import SecurityDetails from './pages/SecurityDetails';
 import ProtectedRoute from './components/ProtectedRoute';
 
 const AppRouter = () => {
@@ -47,7 +46,6 @@ const AppRouter = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/mern-stack" element={<MERNStackDetails />} />
-      <Route path="/security-details" element={<SecurityDetails />} />
       
       {/* Protected Routes */}
       <Route 
