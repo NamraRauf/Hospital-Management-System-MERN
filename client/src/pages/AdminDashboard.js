@@ -27,6 +27,7 @@ const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
+  const [toast, setToast] = useState(null);
 
   useEffect(() => {
     fetchDashboardData();
