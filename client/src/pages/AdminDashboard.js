@@ -11,6 +11,9 @@ import {
   getAdminProfile
 } from '../services/api';
 import Sidebar from '../components/Sidebar';
+import Toast from '../components/Toast';
+import LoadingSpinner from '../components/LoadingSpinner';
+import AnimatedCounter from '../components/AnimatedCounter';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -87,7 +90,7 @@ const AdminDashboard = () => {
       setAdminInfo(adminRes.data);
     } catch (error) {
       console.error('Error fetching dashboard data:', error);
-      alert('Error loading dashboard data. Please refresh the page.');
+      setToast({ message: 'Error loading dashboard data. Please refresh the page.', type: 'error' });
     } finally {
       setLoading(false);
     }
@@ -98,9 +101,9 @@ const AdminDashboard = () => {
       try {
         await deleteAdminPatient(id);
         setPatients(patients.filter(p => p._id !== id));
-        alert('Patient deleted successfully');
+        setToast({ message: 'Patient deleted successfully', type: 'success' });
       } catch (error) {
-        alert('Error deleting patient');
+        setToast({ message: 'Error deleting patient', type: 'error' });
       }
     }
   };
@@ -110,9 +113,9 @@ const AdminDashboard = () => {
       try {
         await deleteAdminDoctor(id);
         setDoctors(doctors.filter(d => d._id !== id));
-        alert('Doctor deleted successfully');
+        setToast({ message: 'Doctor deleted successfully', type: 'success' });
       } catch (error) {
-        alert('Error deleting doctor');
+        setToast({ message: 'Error deleting doctor', type: 'error' });
       }
     }
   };
@@ -170,6 +173,13 @@ const AdminDashboard = () => {
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#f8f9fa', display: 'flex' }}>
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
+      )}
       {/* Sidebar */}
       <Sidebar userType="admin" />
 
