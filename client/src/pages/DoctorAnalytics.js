@@ -378,6 +378,107 @@ const DoctorAnalytics = () => {
           </div>
         </div>
 
+        {/* Weekly Performance Chart */}
+        <div style={{
+          backgroundColor: 'white',
+          padding: '30px',
+          borderRadius: '12px',
+          boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+          marginBottom: '30px'
+        }}>
+          <h3 style={{ color: '#2c3e50', marginBottom: '20px', fontSize: '20px' }}>
+            Weekly Performance (Last 7 Days)
+          </h3>
+          <div style={{ display: 'flex', alignItems: 'flex-end', gap: '10px', height: '200px' }}>
+            {Array.from({ length: 7 }, (_, i) => {
+              const date = new Date();
+              date.setDate(date.getDate() - (6 - i));
+              const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
+              const dayAppointments = appointments.filter(a => {
+                const aptDate = new Date(a.date);
+                return aptDate.toDateString() === date.toDateString();
+              }).length;
+              const maxDay = Math.max(...Array.from({ length: 7 }, (_, j) => {
+                const d = new Date();
+                d.setDate(d.getDate() - (6 - j));
+                return appointments.filter(a => {
+                  const aptDate = new Date(a.date);
+                  return aptDate.toDateString() === d.toDateString();
+                }).length;
+              }), 1);
+              
+              return (
+                <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <div style={{
+                    width: '100%',
+                    height: `${(dayAppointments / maxDay) * 180}px`,
+                    backgroundColor: dayAppointments > 0 ? '#10b981' : '#e5e7eb',
+                    borderRadius: '8px 8px 0 0',
+                    marginBottom: '10px',
+                    display: 'flex',
+                    alignItems: 'flex-end',
+                    justifyContent: 'center',
+                    paddingBottom: '5px',
+                    color: dayAppointments > 0 ? 'white' : '#9ca3af',
+                    fontWeight: '600',
+                    fontSize: '12px',
+                    minHeight: dayAppointments > 0 ? '30px' : '10px',
+                    transition: 'all 0.3s'
+                  }}>
+                    {dayAppointments > 0 && dayAppointments}
+                  </div>
+                  <div style={{ fontSize: '11px', color: '#666', fontWeight: '600', textAlign: 'center' }}>
+                    {dayName}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Patient Demographics */}
+        <div style={{
+          backgroundColor: 'white',
+          padding: '30px',
+          borderRadius: '12px',
+          boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+          marginBottom: '30px'
+        }}>
+          <h3 style={{ color: '#2c3e50', marginBottom: '20px', fontSize: '20px' }}>
+            Patient Demographics & Insights
+          </h3>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px' }}>
+            <div style={{ textAlign: 'center', padding: '20px', backgroundColor: '#f0f9ff', borderRadius: '8px', border: '2px solid #0ea5e9' }}>
+              <div style={{ fontSize: '32px', marginBottom: '10px' }}>👥</div>
+              <div style={{ fontSize: '28px', fontWeight: '700', color: '#0ea5e9', marginBottom: '5px' }}>
+                {stats.uniquePatients}
+              </div>
+              <div style={{ fontSize: '14px', color: '#666' }}>Total Patients</div>
+            </div>
+            <div style={{ textAlign: 'center', padding: '20px', backgroundColor: '#f0fdf4', borderRadius: '8px', border: '2px solid #22c55e' }}>
+              <div style={{ fontSize: '32px', marginBottom: '10px' }}>🔄</div>
+              <div style={{ fontSize: '28px', fontWeight: '700', color: '#22c55e', marginBottom: '5px' }}>
+                {stats.avgAppointmentsPerPatient}x
+              </div>
+              <div style={{ fontSize: '14px', color: '#666' }}>Avg Visits/Patient</div>
+            </div>
+            <div style={{ textAlign: 'center', padding: '20px', backgroundColor: '#fef3c7', borderRadius: '8px', border: '2px solid #f59e0b' }}>
+              <div style={{ fontSize: '32px', marginBottom: '10px' }}>📈</div>
+              <div style={{ fontSize: '28px', fontWeight: '700', color: '#f59e0b', marginBottom: '5px' }}>
+                {stats.thisWeek}
+              </div>
+              <div style={{ fontSize: '14px', color: '#666' }}>This Week</div>
+            </div>
+            <div style={{ textAlign: 'center', padding: '20px', backgroundColor: '#f3e8ff', borderRadius: '8px', border: '2px solid #a855f7' }}>
+              <div style={{ fontSize: '32px', marginBottom: '10px' }}>📊</div>
+              <div style={{ fontSize: '28px', fontWeight: '700', color: '#a855f7', marginBottom: '5px' }}>
+                {stats.thisMonth}
+              </div>
+              <div style={{ fontSize: '14px', color: '#666' }}>This Month</div>
+            </div>
+          </div>
+        </div>
+
         {/* Recent Appointments Summary */}
         <div style={{
           backgroundColor: 'white',
@@ -385,51 +486,82 @@ const DoctorAnalytics = () => {
           borderRadius: '12px',
           boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
         }}>
-          <h3 style={{ color: '#2c3e50', marginBottom: '20px', fontSize: '20px' }}>
-            Recent Appointments Summary
-          </h3>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '15px' }}>
-            {appointments.slice(0, 6).map(apt => (
-              <div
-                key={apt._id}
-                style={{
-                  padding: '15px',
-                  backgroundColor: '#f8f9fa',
-                  borderRadius: '8px',
-                  border: '1px solid #e0e0e0'
-                }}
-              >
-                <div style={{ fontWeight: '600', color: '#2c3e50', marginBottom: '5px' }}>
-                  {apt.patient?.name || 'Unknown Patient'}
-                </div>
-                <div style={{ fontSize: '12px', color: '#666', marginBottom: '5px' }}>
-                  {new Date(apt.date).toLocaleDateString()} at {apt.time}
-                </div>
-                <div style={{ fontSize: '12px', color: '#666' }}>
-                  Reason: {apt.reason || 'No reason provided'}
-                </div>
-                <div style={{ marginTop: '8px' }}>
-                  <span style={{
-                    padding: '4px 10px',
-                    borderRadius: '12px',
-                    fontSize: '11px',
-                    fontWeight: '600',
-                    textTransform: 'capitalize',
-                    backgroundColor: 
-                      apt.status === 'confirmed' ? '#d1fae5' :
-                      apt.status === 'pending' ? '#fef3c7' :
-                      apt.status === 'cancelled' ? '#fee2e2' : '#e0e7ff',
-                    color:
-                      apt.status === 'confirmed' ? '#10b981' :
-                      apt.status === 'pending' ? '#f59e0b' :
-                      apt.status === 'cancelled' ? '#ef4444' : '#6366f1'
-                  }}>
-                    {apt.status}
-                  </span>
-                </div>
-              </div>
-            ))}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+            <h3 style={{ color: '#2c3e50', margin: 0, fontSize: '20px' }}>
+              Recent Appointments Summary
+            </h3>
+            <span style={{ fontSize: '14px', color: '#666' }}>
+              Showing {Math.min(6, appointments.length)} of {appointments.length} appointments
+            </span>
           </div>
+          {appointments.length === 0 ? (
+            <div style={{ textAlign: 'center', padding: '40px', color: '#666' }}>
+              <div style={{ fontSize: '48px', marginBottom: '10px' }}>📅</div>
+              <div style={{ fontSize: '18px' }}>No appointments yet</div>
+            </div>
+          ) : (
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '15px' }}>
+              {appointments.slice(0, 6).map(apt => (
+                <div
+                  key={apt._id}
+                  style={{
+                    padding: '20px',
+                    backgroundColor: '#f8f9fa',
+                    borderRadius: '12px',
+                    border: '1px solid #e0e0e0',
+                    transition: 'all 0.3s',
+                    cursor: 'pointer'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-5px)';
+                    e.currentTarget.style.boxShadow = '0 8px 16px rgba(0,0,0,0.1)';
+                    e.currentTarget.style.backgroundColor = '#f1f5f9';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = 'none';
+                    e.currentTarget.style.backgroundColor = '#f8f9fa';
+                  }}
+                >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '10px' }}>
+                    <div style={{ fontWeight: '600', color: '#2c3e50', fontSize: '16px' }}>
+                      {apt.patient?.name || 'Unknown Patient'}
+                    </div>
+                    <span style={{
+                      padding: '4px 12px',
+                      borderRadius: '12px',
+                      fontSize: '11px',
+                      fontWeight: '600',
+                      textTransform: 'capitalize',
+                      backgroundColor: 
+                        apt.status === 'confirmed' ? '#d1fae5' :
+                        apt.status === 'pending' ? '#fef3c7' :
+                        apt.status === 'cancelled' ? '#fee2e2' : '#e0e7ff',
+                      color:
+                        apt.status === 'confirmed' ? '#10b981' :
+                        apt.status === 'pending' ? '#f59e0b' :
+                        apt.status === 'cancelled' ? '#ef4444' : '#6366f1'
+                    }}>
+                      {apt.status}
+                    </span>
+                  </div>
+                  <div style={{ fontSize: '13px', color: '#666', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span>📅</span>
+                    <span>{new Date(apt.date).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}</span>
+                  </div>
+                  <div style={{ fontSize: '13px', color: '#666', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span>🕐</span>
+                    <span>{apt.time}</span>
+                  </div>
+                  {apt.reason && (
+                    <div style={{ fontSize: '12px', color: '#94a3b8', marginTop: '10px', paddingTop: '10px', borderTop: '1px solid #e2e8f0' }}>
+                      <strong>Reason:</strong> {apt.reason}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

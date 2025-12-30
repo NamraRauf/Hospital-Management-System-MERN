@@ -570,7 +570,7 @@ const Home = () => {
               </p>
             </div>
 
-            {/* Feature 4 */}
+            {/* Feature 4 - Enhanced Security Section */}
             <div 
               onClick={() => {
                 const token = localStorage.getItem('token');
@@ -583,42 +583,65 @@ const Home = () => {
               style={{
                 padding: '40px',
                 borderRadius: '16px',
-                backgroundColor: '#f8fafc',
-                border: '1px solid #e2e8f0',
+                backgroundColor: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                border: '2px solid #764ba2',
                 transition: 'all 0.3s',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                position: 'relative',
+                overflow: 'hidden'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-5px)';
-                e.currentTarget.style.boxShadow = '0 12px 24px rgba(0,0,0,0.1)';
-                e.currentTarget.style.backgroundColor = '#f1f5f9';
+                e.currentTarget.style.transform = 'translateY(-8px) scale(1.02)';
+                e.currentTarget.style.boxShadow = '0 20px 40px rgba(118, 75, 162, 0.3)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.transform = 'translateY(0) scale(1)';
                 e.currentTarget.style.boxShadow = 'none';
-                e.currentTarget.style.backgroundColor = '#f8fafc';
               }}
             >
               <div style={{
                 width: '60px',
                 height: '60px',
-                backgroundColor: '#8b5cf6',
+                backgroundColor: 'rgba(255, 255, 255, 0.2)',
                 borderRadius: '12px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 fontSize: '32px',
-                marginBottom: '20px'
+                marginBottom: '20px',
+                backdropFilter: 'blur(10px)'
               }}>
                 🔒
               </div>
-              <h3 style={{ fontSize: '24px', fontWeight: '700', color: '#1e293b', marginBottom: '12px' }}>
+              <h3 style={{ fontSize: '24px', fontWeight: '700', color: 'white', marginBottom: '12px' }}>
                 Secure & Private
               </h3>
-              <p style={{ fontSize: '16px', color: '#64748b', lineHeight: '1.6' }}>
-                JWT-based authentication, encrypted passwords, role-based access control, 
-                and secure data storage with MongoDB.
+              <p style={{ fontSize: '16px', color: 'rgba(255, 255, 255, 0.9)', lineHeight: '1.6', marginBottom: '20px' }}>
+                Enterprise-grade security with multiple layers of protection
               </p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'white', fontSize: '14px' }}>
+                  <span style={{ fontSize: '18px' }}>✅</span>
+                  <span>JWT Token Authentication</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'white', fontSize: '14px' }}>
+                  <span style={{ fontSize: '18px' }}>✅</span>
+                  <span>Bcrypt Password Encryption</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'white', fontSize: '14px' }}>
+                  <span style={{ fontSize: '18px' }}>✅</span>
+                  <span>Role-Based Access Control (RBAC)</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'white', fontSize: '14px' }}>
+                  <span style={{ fontSize: '18px' }}>✅</span>
+                  <span>MongoDB Atlas Secure Cloud Database</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'white', fontSize: '14px' }}>
+                  <span style={{ fontSize: '18px' }}>✅</span>
+                  <span>HTTPS Ready & CORS Protected</span>
+                </div>
+              </div>
             </div>
 
             {/* Feature 5 - Admin Panel */}
