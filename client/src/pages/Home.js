@@ -1025,12 +1025,14 @@ const Home = () => {
                   features={['Stripe Integration', 'Secure Payments', 'Payment History', 'Receipts']}
                   color="#8b5cf6"
                 />
-                <HospitalFeature
-                  icon="👑"
-                  title="Admin Panel"
-                  features={['User Management', 'System Analytics', 'Reports', 'Settings']}
-                  color="#ef4444"
-                />
+                {(!token || (token && userType?.toLowerCase() === 'admin')) && (
+                  <HospitalFeature
+                    icon="👑"
+                    title="Admin Panel"
+                    features={['User Management', 'System Analytics', 'Reports', 'Settings']}
+                    color="#ef4444"
+                  />
+                )}
                 <HospitalFeature
                   icon="📊"
                   title="Analytics & Reports"
