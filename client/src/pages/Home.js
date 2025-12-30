@@ -572,14 +572,13 @@ const Home = () => {
 
             {/* Feature 4 - Enhanced Security Section */}
             <div 
-              onClick={() => {
-                const token = localStorage.getItem('token');
-                if (token) {
-                  navigate('/patient-dashboard');
-                } else {
-                  navigate('/register');
-                }
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Security clicked');
+                navigate('/security-details');
               }}
+              type="button"
               style={{
                 padding: '40px',
                 borderRadius: '16px',
