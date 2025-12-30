@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { getDoctorAppointments, getAllPatients } from '../services/api';
 import Sidebar from '../components/Sidebar';
 
 const DoctorAnalytics = () => {
-  const navigate = useNavigate();
   const [appointments, setAppointments] = useState([]);
   const [patients, setPatients] = useState([]);
   const [loading, setLoading] = useState(true);
