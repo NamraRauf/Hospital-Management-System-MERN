@@ -663,83 +663,85 @@ const Home = () => {
               </div>
             </div>
 
-            {/* Feature 5 - Admin Panel */}
-            <div
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                console.log('Admin Panel clicked');
-                const token = localStorage.getItem('token');
-                const userType = localStorage.getItem('userType');
-                
-                const normalizedUserType = userType?.toLowerCase();
-                
-                if (token && normalizedUserType === 'admin') {
-                  navigate('/admin-dashboard');
-                } else if (token) {
-                  alert('⚠️ Admin Panel - Please login as Admin.\n\nLogging out current session...');
-                  localStorage.clear();
-                  navigate('/login');
-                } else {
-                  navigate('/login');
-                }
-              }}
-              style={{
-                padding: '40px',
-                borderRadius: '16px',
-                backgroundColor: '#f8fafc',
-                border: '2px solid #8b5cf6',
-                transition: 'all 0.3s',
-                cursor: 'pointer',
-                position: 'relative',
-                zIndex: 10,
-                pointerEvents: 'auto'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-5px)';
-                e.currentTarget.style.boxShadow = '0 12px 24px rgba(139, 92, 246, 0.3)';
-                e.currentTarget.style.backgroundColor = '#f3e8ff';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = 'none';
-                e.currentTarget.style.backgroundColor = '#f8fafc';
-              }}
-            >
-              <div style={{
-                position: 'absolute',
-                top: '15px',
-                right: '15px',
-                backgroundColor: '#8b5cf6',
-                color: 'white',
-                padding: '4px 12px',
-                borderRadius: '12px',
-                fontSize: '12px',
-                fontWeight: '700'
-              }}>
-                ADMIN
+            {/* Feature 5 - Admin Panel - Only show for Admin users or logged out users */}
+            {(!token || (token && userType?.toLowerCase() === 'admin')) && (
+              <div
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  console.log('Admin Panel clicked');
+                  const token = localStorage.getItem('token');
+                  const userType = localStorage.getItem('userType');
+                  
+                  const normalizedUserType = userType?.toLowerCase();
+                  
+                  if (token && normalizedUserType === 'admin') {
+                    navigate('/admin-dashboard');
+                  } else if (token) {
+                    alert('⚠️ Admin Panel - Please login as Admin.\n\nLogging out current session...');
+                    localStorage.clear();
+                    navigate('/login');
+                  } else {
+                    navigate('/login');
+                  }
+                }}
+                style={{
+                  padding: '40px',
+                  borderRadius: '16px',
+                  backgroundColor: '#f8fafc',
+                  border: '2px solid #8b5cf6',
+                  transition: 'all 0.3s',
+                  cursor: 'pointer',
+                  position: 'relative',
+                  zIndex: 10,
+                  pointerEvents: 'auto'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-5px)';
+                  e.currentTarget.style.boxShadow = '0 12px 24px rgba(139, 92, 246, 0.3)';
+                  e.currentTarget.style.backgroundColor = '#f3e8ff';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = 'none';
+                  e.currentTarget.style.backgroundColor = '#f8fafc';
+                }}
+              >
+                <div style={{
+                  position: 'absolute',
+                  top: '15px',
+                  right: '15px',
+                  backgroundColor: '#8b5cf6',
+                  color: 'white',
+                  padding: '4px 12px',
+                  borderRadius: '12px',
+                  fontSize: '12px',
+                  fontWeight: '700'
+                }}>
+                  ADMIN
+                </div>
+                <div style={{
+                  width: '60px',
+                  height: '60px',
+                  backgroundColor: '#8b5cf6',
+                  borderRadius: '12px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '32px',
+                  marginBottom: '20px'
+                }}>
+                  👑
+                </div>
+                <h3 style={{ fontSize: '24px', fontWeight: '700', color: '#1e293b', marginBottom: '12px' }}>
+                  Admin Panel
+                </h3>
+                <p style={{ fontSize: '16px', color: '#64748b', lineHeight: '1.6' }}>
+                  Complete admin dashboard with patient management, doctor management,
+                  statistics, reports, and system administration.
+                </p>
               </div>
-              <div style={{
-                width: '60px',
-                height: '60px',
-                backgroundColor: '#8b5cf6',
-                borderRadius: '12px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '32px',
-                marginBottom: '20px'
-              }}>
-                👑
-              </div>
-              <h3 style={{ fontSize: '24px', fontWeight: '700', color: '#1e293b', marginBottom: '12px' }}>
-                Admin Panel
-              </h3>
-              <p style={{ fontSize: '16px', color: '#64748b', lineHeight: '1.6' }}>
-                Complete admin dashboard with patient management, doctor management,
-                statistics, reports, and system administration.
-              </p>
-            </div>
+            )}
 
             {/* Feature 6 - Analytics & Reports */}
             <div
