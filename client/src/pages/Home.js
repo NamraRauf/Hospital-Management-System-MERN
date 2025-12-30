@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import AnimatedCounter from '../components/AnimatedCounter';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -355,24 +356,28 @@ const Home = () => {
               label="Patients Managed" 
               icon="👥"
               desc="Efficient patient record management"
+              animated={true}
             />
             <StatBox 
               number="500+" 
               label="Doctors Registered" 
               icon="👨‍⚕️"
               desc="Expert medical professionals"
+              animated={true}
             />
             <StatBox 
               number="50,000+" 
               label="Appointments Booked" 
               icon="📅"
               desc="Seamless appointment scheduling"
+              animated={true}
             />
             <StatBox 
               number="99.9%" 
               label="Uptime" 
               icon="⚡"
               desc="Reliable system performance"
+              animated={false}
             />
           </div>
         </div>
@@ -1350,37 +1355,61 @@ const TechCard = ({ name, desc, icon, color }) => (
   </div>
 );
 
-const StatBox = ({ number, label, icon, desc }) => (
-  <div style={{
-    backgroundColor: 'rgba(255,255,255,0.1)',
-    padding: '40px 30px',
-    borderRadius: '20px',
-    backdropFilter: 'blur(10px)',
-    border: '1px solid rgba(255,255,255,0.2)',
-    transition: 'all 0.3s',
-    cursor: 'pointer'
-  }}
-  onMouseEnter={(e) => {
-    e.currentTarget.style.transform = 'translateY(-10px)';
-    e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.2)';
-  }}
-  onMouseLeave={(e) => {
-    e.currentTarget.style.transform = 'translateY(0)';
-    e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.1)';
-  }}
-  >
-    <div style={{ fontSize: '50px', marginBottom: '15px' }}>{icon}</div>
-    <h3 style={{ fontSize: '56px', fontWeight: '900', marginBottom: '10px', textShadow: '0 2px 10px rgba(0,0,0,0.3)' }}>
-      {number}
-    </h3>
-    <p style={{ fontSize: '20px', fontWeight: '600', marginBottom: '8px', opacity: 1 }}>
-      {label}
-    </p>
-    <p style={{ fontSize: '14px', opacity: 0.8 }}>
-      {desc}
-    </p>
-  </div>
-);
+const StatBox = ({ number, label, icon, desc, animated = false }) => {
+  // Extract numeric value for animation
+  const numericValue = number.replace(/[^0-9.]/g, '');
+  const suffix = number.replace(/[0-9.]/g, '');
+  const isNumeric = !isNaN(numericValue) && numericValue !== '';
+
+  return (
+    <div style={{
+      backgroundColor: 'rgba(255,255,255,0.1)',
+      padding: '40px 30px',
+      borderRadius: '20px',
+      backdropFilter: 'blur(10px)',
+      border: '1px solid rgba(255,255,255,0.2)',
+      transition: 'all 0.3s',
+      cursor: 'pointer',
+      position: 'relative',
+      overflow: 'hidden'
+    }}
+    onMouseEnter={(e) => {
+      e.currentTarget.style.transform = 'translateY(-10px) scale(1.02)';
+      e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.2)';
+      e.currentTarget.style.boxShadow = '0 20px 40px rgba(0,0,0,0.2)';
+    }}
+    onMouseLeave={(e) => {
+      e.currentTarget.style.transform = 'translateY(0) scale(1)';
+      e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.1)';
+      e.currentTarget.style.boxShadow = 'none';
+    }}
+    >
+      <div style={{ fontSize: '50px', marginBottom: '15px', animation: 'bounce 2s infinite' }}>{icon}</div>
+      <h3 style={{ fontSize: '56px', fontWeight: '900', marginBottom: '10px', textShadow: '0 2px 10px rgba(0,0,0,0.3)' }}>
+        {animated && isNumeric ? (
+          <>
+            <AnimatedCounter end={parseInt(numericValue)} duration={2000} />
+            {suffix}
+          </>
+        ) : (
+          number
+        )}
+      </h3>
+      <p style={{ fontSize: '20px', fontWeight: '600', marginBottom: '8px', opacity: 1 }}>
+        {label}
+      </p>
+      <p style={{ fontSize: '14px', opacity: 0.8 }}>
+        {desc}
+      </p>
+      <style>{`
+        @keyframes bounce {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-10px); }
+        }
+      `}</style>
+    </div>
+  );
+};
 
 const HospitalFeature = ({ icon, title, features, color }) => (
   <div style={{
