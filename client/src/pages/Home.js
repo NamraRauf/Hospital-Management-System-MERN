@@ -572,6 +572,13 @@ const Home = () => {
 
             {/* Feature 4 - Enhanced Security Section */}
             <div 
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Security section clicked');
+                navigate('/security-details');
+              }}
               style={{
                 padding: '40px',
                 borderRadius: '16px',
@@ -581,7 +588,9 @@ const Home = () => {
                 transition: 'all 0.3s',
                 position: 'relative',
                 overflow: 'hidden',
-                cursor: 'default'
+                cursor: 'pointer',
+                zIndex: 10,
+                pointerEvents: 'auto'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-5px)';
@@ -615,13 +624,15 @@ const Home = () => {
               <div style={{ 
                 marginTop: '15px', 
                 padding: '12px', 
-                backgroundColor: 'rgba(255, 255, 255, 0.1)', 
+                backgroundColor: 'rgba(255, 255, 255, 0.2)', 
                 borderRadius: '8px',
                 fontSize: '12px',
-                color: 'rgba(255, 255, 255, 0.8)',
-                fontStyle: 'italic'
+                color: 'rgba(255, 255, 255, 0.95)',
+                fontWeight: '600',
+                textAlign: 'center',
+                border: '1px solid rgba(255, 255, 255, 0.3)'
               }}>
-                ℹ️ Information display only - Click to learn more about our security features
+                👆 Click to learn more about our security features
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'white', fontSize: '14px' }}>
