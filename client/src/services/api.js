@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Naya Vercel Backend URL
-const API_BASE_URL = "https://hospital-management-system-mern-sable.vercel.app/api";
+const API_BASE_URL = https://hospital-management-system-mern-sable.vercel.app/api
 
 const API = axios.create({ 
   baseURL: API_BASE_URL,
