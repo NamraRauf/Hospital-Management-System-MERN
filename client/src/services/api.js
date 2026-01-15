@@ -1,11 +1,11 @@
 import axios from "axios";
 
-// Use environment variable for API URL, fallback to localhost for development
-const API_BASE_URL = (process.env.REACT_APP_API_URL || "http://localhost:5000/api").replace(/\/$/, "");
+// Naya Vercel Backend URL
+const API_BASE_URL = "https://hospital-management-system-mern-sable.vercel.app/api";
 
 const API = axios.create({ 
   baseURL: API_BASE_URL,
-  timeout: 10000, // 10 seconds timeout
+  timeout: 10000, 
   headers: {
     'Content-Type': 'application/json'
   }
@@ -29,7 +29,7 @@ API.interceptors.response.use(
     if (error.code === 'ECONNABORTED') {
       error.message = 'Request timeout. Please check your connection.';
     } else if (error.message === 'Network Error') {
-      error.message = 'Cannot connect to server. Please make sure backend is running on port 5000.';
+      error.message = 'Cannot connect to server. Check if Vercel backend is up.';
     }
     return Promise.reject(error);
   }
