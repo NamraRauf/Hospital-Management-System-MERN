@@ -19,12 +19,18 @@ const Login = () => {
     setError('');
     
     try {
+      console.log('🔐 Login attempt:', { email: formData.email, userType: formData.userType });
       const res = await loginUser(formData);
+      console.log('✅ Login response:', res);
+      console.log('✅ Response data:', res?.data);
       
       if (res?.data?.token) {
+        console.log('✅ Token received:', res.data.token.substring(0, 20) + '...');
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('user', JSON.stringify(res.data.user || {}));
+        console.log('✅ Token saved to localStorage');
       } else {
+        console.error('❌ No token in response:', res);
         localStorage.removeItem('token');
         setError('Login failed: No token received');
         setLoading(false);
@@ -33,9 +39,11 @@ const Login = () => {
 
       // Prefer server-reported userType (Admin/Doctor/Patient), fallback to selected value
       const resolvedUserType = (res?.data?.userType || formData.userType || 'patient').toLowerCase();
+      console.log('✅ UserType resolved:', resolvedUserType);
       localStorage.setItem('userType', resolvedUserType);
       
       // Navigate to appropriate dashboard
+      console.log('✅ Navigating to dashboard...');
       if (resolvedUserType === 'admin') {
         navigate('/admin-dashboard');
       } else if (resolvedUserType === 'doctor') {
@@ -44,19 +52,26 @@ const Login = () => {
         navigate('/patient-dashboard');
       }
     } catch (error) {
-      console.error('Login Error:', error);
-      console.error('Error Response:', error.response);
+      console.error('❌ Login Error:', error);
+      console.error('❌ Error Response:', error.response);
+      console.error('❌ Error Data:', error.response?.data);
+      console.error('❌ Error Status:', error.response?.status);
+      console.error('❌ Error Message:', error.message);
       
       let errorMessage = 'Login Failed. Please check your credentials.';
       
       if (error.response) {
         // Server responded with error
-        errorMessage = error.response.data?.message || error.response.data?.error || errorMessage;
+        const serverMessage = error.response.data?.message || error.response.data?.error;
+        console.error('❌ Server error message:', serverMessage);
+        errorMessage = serverMessage || errorMessage;
       } else if (error.request) {
         // Request made but no response
-        errorMessage = 'Cannot connect to server. Please make sure backend is running on port 5000.';
+        console.error('❌ No response from server');
+        errorMessage = 'Cannot connect to server. Check if Vercel backend is up.';
       } else {
         // Something else happened
+        console.error('❌ Other error:', error.message);
         errorMessage = error.message || errorMessage;
       }
       
