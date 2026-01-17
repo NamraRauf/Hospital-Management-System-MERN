@@ -1,35 +1,11 @@
 import axios from "axios";
 
-// Use environment variable for API URL, fallback based on environment
-const getApiBaseUrl = () => {
-  // If environment variable is set, use it
-  if (process.env.REACT_APP_API_URL) {
-    console.log('🔧 Using REACT_APP_API_URL:', process.env.REACT_APP_API_URL);
-    return process.env.REACT_APP_API_URL.replace(/\/$/, "");
-  }
-  
-  // If running on Netlify/Vercel (production), use Vercel backend
-  const hostname = window.location.hostname;
-  console.log('🌐 Current hostname:', hostname);
-  
-  if (hostname.includes('netlify.app') || hostname.includes('vercel.app')) {
-    const backendUrl = "https://hospital-management-system-mern-sable.vercel.app/api";
-    console.log('✅ Production detected! Using backend:', backendUrl);
-    return backendUrl;
-  }
-  
-  // Default to localhost for local development
-  const localUrl = "http://localhost:5000/api";
-  console.log('🏠 Local development detected! Using backend:', localUrl);
-  return localUrl;
-};
-
-const API_BASE_URL = getApiBaseUrl();
-console.log('🚀 Final API_BASE_URL:', API_BASE_URL);
+// Vercel Backend URL - Production me directly use hoga
+const API_BASE_URL = "https://hospital-management-system-mern-sable.vercel.app/api";
 
 const API = axios.create({ 
   baseURL: API_BASE_URL,
-  timeout: 10000, // 10 seconds timeout
+  timeout: 10000, 
   headers: {
     'Content-Type': 'application/json'
   }
@@ -53,7 +29,7 @@ API.interceptors.response.use(
     if (error.code === 'ECONNABORTED') {
       error.message = 'Request timeout. Please check your connection.';
     } else if (error.message === 'Network Error') {
-      error.message = 'Cannot connect to server. Please make sure backend is running on port 5000.';
+      error.message = 'Cannot connect to server. Check if Vercel backend is up.';
     }
     return Promise.reject(error);
   }
