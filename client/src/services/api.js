@@ -4,19 +4,28 @@ import axios from "axios";
 const getApiBaseUrl = () => {
   // If environment variable is set, use it
   if (process.env.REACT_APP_API_URL) {
+    console.log('🔧 Using REACT_APP_API_URL:', process.env.REACT_APP_API_URL);
     return process.env.REACT_APP_API_URL.replace(/\/$/, "");
   }
   
   // If running on Netlify/Vercel (production), use Vercel backend
-  if (window.location.hostname.includes('netlify.app') || window.location.hostname.includes('vercel.app')) {
-    return "https://hospital-management-system-mern-sable.vercel.app/api";
+  const hostname = window.location.hostname;
+  console.log('🌐 Current hostname:', hostname);
+  
+  if (hostname.includes('netlify.app') || hostname.includes('vercel.app')) {
+    const backendUrl = "https://hospital-management-system-mern-sable.vercel.app/api";
+    console.log('✅ Production detected! Using backend:', backendUrl);
+    return backendUrl;
   }
   
   // Default to localhost for local development
-  return "http://localhost:5000/api";
+  const localUrl = "http://localhost:5000/api";
+  console.log('🏠 Local development detected! Using backend:', localUrl);
+  return localUrl;
 };
 
 const API_BASE_URL = getApiBaseUrl();
+console.log('🚀 Final API_BASE_URL:', API_BASE_URL);
 
 const API = axios.create({ 
   baseURL: API_BASE_URL,
