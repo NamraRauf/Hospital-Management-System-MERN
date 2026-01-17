@@ -1,7 +1,22 @@
 import axios from "axios";
 
-// Use environment variable for API URL, fallback to localhost for development
-const API_BASE_URL = (process.env.REACT_APP_API_URL || "http://localhost:5000/api").replace(/\/$/, "");
+// Use environment variable for API URL, fallback based on environment
+const getApiBaseUrl = () => {
+  // If environment variable is set, use it
+  if (process.env.REACT_APP_API_URL) {
+    return process.env.REACT_APP_API_URL.replace(/\/$/, "");
+  }
+  
+  // If running on Netlify/Vercel (production), use Vercel backend
+  if (window.location.hostname.includes('netlify.app') || window.location.hostname.includes('vercel.app')) {
+    return "https://hospital-management-system-mern-sable.vercel.app/api";
+  }
+  
+  // Default to localhost for local development
+  return "http://localhost:5000/api";
+};
+
+const API_BASE_URL = getApiBaseUrl();
 
 const API = axios.create({ 
   baseURL: API_BASE_URL,
