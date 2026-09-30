@@ -60,11 +60,10 @@ const Register = () => {
     try {
       const { confirmPassword, userType, ...dataToSend } = formData;
       
-      let res;
       if (formData.userType === 'patient') {
-        res = await registerPatient(dataToSend);
+        await registerPatient(dataToSend);
       } else {
-        res = await registerDoctor(dataToSend);
+        await registerDoctor(dataToSend);
       }
       
       // Success - show message and redirect

@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// Naya Vercel Backend URL
-const API_BASE_URL = "https://hospital-management-system-mern-sable.vercel.app/api";
+const API_BASE_URL =
+  process.env.REACT_APP_API_URL || "http://localhost:5000/api";
 
 const API = axios.create({ 
   baseURL: API_BASE_URL,
@@ -29,7 +29,7 @@ API.interceptors.response.use(
     if (error.code === 'ECONNABORTED') {
       error.message = 'Request timeout. Please check your connection.';
     } else if (error.message === 'Network Error') {
-      error.message = 'Cannot connect to server. Check if Vercel backend is up.';
+      error.message = 'Cannot connect to server. Start the backend with: npm run server';
     }
     return Promise.reject(error);
   }

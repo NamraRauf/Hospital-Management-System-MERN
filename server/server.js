@@ -23,6 +23,8 @@ const corsOptions = {
     
     const allowedOrigins = [
       'http://localhost:3000',
+      'http://localhost:3001',
+      'http://localhost:3004',
       process.env.FRONTEND_URL,
       /\.vercel\.app$/,  // Allow all Vercel deployments
       /\.netlify\.app$/, // Allow all Netlify deployments
@@ -74,8 +76,8 @@ mongoose.connection.on("error", (err) => {
 // MongoDB connection with better error handling
 const connectDB = async () => {
   try {
-    // Hard-coded MongoDB Atlas connection string
-    const mongoURI = "mongodb+srv://hospitaluser:namra1234@clusterfyphmsnr.ij1w3r9.mongodb.net/hospital?retryWrites=true&w=majority";
+    // Use environment variable if available (for production), otherwise use hard-coded (for local dev)
+    const mongoURI = process.env.MONGO_URI || "mongodb+srv://hospitaluser:namra1234@clusterfyphmsnr.ij1w3r9.mongodb.net/hospital?retryWrites=true&w=majority";
     
     // Connection options
     const options = {
@@ -86,14 +88,25 @@ const connectDB = async () => {
     await mongoose.connect(mongoURI, options);
     console.log("✅ MongoDB Connected Successfully");
     console.log("📦 Database: hospital");
+    if (process.env.MONGO_URI) {
+      console.log("🔧 Using environment variable for MongoDB connection");
+    } else {
+      console.log("🔧 Using hard-coded MongoDB connection (local dev)");
+    }
   } catch (err) {
     console.error("❌ MongoDB Connection Error:", err.message);
     console.log("⚠️  Server will continue running, but database operations may fail");
-    console.log("💡 To fix: Check MongoDB Atlas connection string");
+    console.log("💡 To fix: Check MongoDB Atlas connection string or MONGO_URI environment variable");
   }
 };
 
 connectDB();
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+// Vercel serverless function export
+module.exports = app;
+
+// For local development, start server
+if (require.main === module) {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+}
